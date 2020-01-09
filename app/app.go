@@ -1,6 +1,7 @@
 package app
 
 import (
+	"L/app/http/middlewares"
 	"L/routes"
 	"context"
 	"github.com/gin-gonic/gin"
@@ -20,6 +21,9 @@ var server *http.Server
 func New() *Application {
 	// 实例化 gin
 	engine := gin.Default()
+
+	// 全局中间件
+	middlewares.Setup(engine)
 
 	// 路由加载
 	routes.Setup(engine)
