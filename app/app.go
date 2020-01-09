@@ -2,6 +2,7 @@ package app
 
 import (
 	"L/app/http/middlewares"
+	"L/app/providers"
 	"L/routes"
 	"context"
 	"github.com/gin-gonic/gin"
@@ -14,11 +15,18 @@ import (
 
 type Application struct {
 	Engine *gin.Engine
+	Config *providers.Config
 }
 
 var server *http.Server
 
 func New() *Application {
+	// 加载配置
+	cfg := providers.NewConfig()
+
+	// 应用模式
+	gin.SetMode(cfg.App.Mode)
+
 	// 实例化 gin
 	engine := gin.Default()
 
@@ -30,6 +38,7 @@ func New() *Application {
 
 	return &Application{
 		Engine: engine,
+		Config: cfg,
 	}
 }
 
@@ -38,8 +47,8 @@ func (app *Application) Run() {
 	server = &http.Server{
 		Addr:         ":8080",
 		Handler:      app.Engine,
-		ReadTimeout:  120 * time.Second,
-		WriteTimeout: 120 * time.Second,
+		ReadTimeout:  app.Config.Http.ReadTimeout * time.Second,
+		WriteTimeout: app.Config.Http.WriteTimeout * time.Second,
 	}
 
 	// 启动服务
@@ -72,7 +81,7 @@ func (app *Application) terminate() {
 	log.Println("Shutdown Server ...")
 
 	// 关闭服务
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), app.Config.App.CancelTimeout*time.Second)
 	defer cancel()
 	if err := server.Shutdown(ctx); err != nil {
 		log.Fatal("Server Shutdown: ", err)

@@ -1,0 +1,11 @@
+app:
+  name: L
+  version: 0.1
+  mode: debug
+  canceltimeout: 5
+
+http:
+  addr: 127.0.0.1
+  port: 8080
+  readtimeout: 120
+  writetimeout: 120
