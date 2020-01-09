@@ -6,6 +6,7 @@ import (
 	"L/routes"
 	"context"
 	"github.com/gin-gonic/gin"
+	"go.uber.org/zap"
 	"log"
 	"net/http"
 	"os"
@@ -16,6 +17,7 @@ import (
 type Application struct {
 	Engine *gin.Engine
 	Config *providers.Config
+	Logger *zap.Logger
 }
 
 var server *http.Server
@@ -36,9 +38,13 @@ func New() *Application {
 	// 路由加载
 	routes.Setup(engine)
 
+	// 收集日志
+	logger := providers.NewLogger()
+
 	return &Application{
 		Engine: engine,
 		Config: cfg,
+		Logger: logger,
 	}
 }
 
@@ -57,6 +63,9 @@ func (app *Application) Run() {
 			log.Fatalf("Http server listen: %s\n", err)
 		}
 	}()
+
+	// 记录日志
+	app.Logger.Info("L is running here")
 
 	// 欢迎信息
 	app.welcome()

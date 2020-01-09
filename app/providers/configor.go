@@ -8,6 +8,7 @@ import (
 type Config struct {
 	config.App  // 应用配置
 	config.Http // Http 服务配置
+	config.Log  // 日志配置
 }
 
 func NewConfig() *Config {

@@ -52,7 +52,7 @@ go run main.go
 - [X] 优雅关闭服务器
 - [X] 中间件配置
 - [X] 配置管理
-- [] 日志管理
+- [X] 日志管理
 - [] request 请求处理
 - [] validator 请求验证器 
 - [] response 响应处理

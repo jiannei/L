@@ -9,3 +9,13 @@ http:
   port: 8080
   readtimeout: 120
   writetimeout: 120
+
+  log:
+    switch: on
+    path: ./storage/logs/
+    filename: liuqian.log
+    level: info
+    maxsize: 128
+    maxage: 7
+    maxbackups: 30
+    compress: false
