@@ -1,5 +1,7 @@
 # L
 
+基于 Gin 以 Laravel  风格模块化设计的 RESTFul API 工具
+
 ## Gin
 
 * 初始化项目
