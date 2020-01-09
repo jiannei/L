@@ -1,6 +1,6 @@
 # L
 
-基于 Gin 以 Laravel  风格模块化设计的 RESTFul API 工具
+语义化设计的 golang API 框架，包含了常用的工具来辅助快速地业务开发。
 
 ## Gin
 
